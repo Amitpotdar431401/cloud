@@ -1,0 +1,118 @@
+Part 1: Create an Ubuntu EC2 Instance and Host a Website
+Step 1: Launch an Ubuntu EC2 Instance
+Navigate to EC2 Service:
+
+Log in to the AWS Management Console.
+Search for and select "EC2" from the services.
+Launch Instance:
+
+Click on Launch Instance.
+Choose Ubuntu Server 22.04 LTS (or the latest LTS version) under the Amazon Machine Image (AMI).
+Select Instance Type:
+
+Choose t2.micro instance type (eligible for the Free Tier) and click Next.
+Configure Instance:
+
+Configure the instance as needed and click Review and Launch.
+Key Pair Configuration:
+
+Choose an existing key pair or create a new one.
+Download the .pem file as it’s required to access your instance.
+Launch Instances:
+
+Click Launch Instances and wait until the instance status changes to running.
+Step 2: Connect to Your EC2 Instance Using PuTTY
+Convert .pem to .ppk:
+
+Open PuTTYgen (part of the PuTTY installation package).
+Click Load and select your .pem file.
+Click Save private key and save it as a .ppk file.
+Connect to the Instance:
+
+Open PuTTY and enter your EC2 instance’s public DNS or IP in the Host Name field.
+Under Connection > SSH > Auth, browse and select the .ppk file you saved.
+Go back to the Session tab and click Open to connect.
+When prompted for the username, enter ubuntu.
+Step 3: Install Apache Web Server
+Run the following commands in the terminal:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+sudo apt update
+sudo apt install apache2 -y
+sudo systemctl start apache2
+sudo systemctl enable apache2
+Step 4: Create a Simple HTML Page
+Create an HTML file:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+sudo nano /var/www/html/index.html
+Add the following content:
+html
+
+Verify
+
+Open In Editor
+Edit
+Run
+Copy code
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome Page</title>
+</head>
+<body>
+    <h1>Welcome to Cloud Computing</h1>
+</body>
+</html>
+Save and exit the editor.
+Step 5: Configure Security Group for HTTP Access
+In the EC2 Dashboard, select your instance.
+Under Security, click the Security Group link.
+Edit inbound rules, adding:
+Type: HTTP
+Protocol: TCP
+Port: 80
+Source: Anywhere (0.0.0.0/0)
+Save the rule.
+Step 6: Access Your Website
+Open your instance’s public IP or DNS in a web browser to see the message.
+Step 7: Transfer Files with WinSCP
+Open WinSCP and create a new session.
+Configure the session:
+File Protocol: SFTP
+Host Name: Your instance’s public IP/DNS
+Port Number: 22
+User Name: ubuntu
+Private Key File: Select your .ppk file.
+Enable the private key file in Advanced... settings under SSH > Authentication.
+Click Login to connect to your EC2 instance.
+Part 2: Create a Windows EC2 Instance and Host a Website
+Step 1: Launch a Windows EC2 Instance
+Log in to the AWS Console:
+
+Go to the AWS Management Console and log in.
+Navigate to EC2:
+
+Search for EC2 and select it from the services.
+Launch Instance:
+
+Click Launch Instance.
+Choose Microsoft Windows Server as the AMI (select Windows Server 2019 or 2022).
+Select an instance type like t2.micro (free tier eligible).
+Key Pair Configuration:
+
+Choose an existing key pair or create a new one to securely access the instance. Download the .pem file if you create a new key pair.
+Configure Security Group:
+
+Add rules to allow:
+RDP (Remote Desktop Protocol) on port 3389 (allowing access).
