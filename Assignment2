@@ -1,0 +1,85 @@
+Here are the steps to create a VPC in AWS with a public and private subnet, launch EC2 instances, and connect to them:
+
+Step 1: Create a VPC
+Go to the VPC Dashboard.
+Click on Create VPC.
+In the "Create VPC" wizard:
+Name tag: "MyVPC"
+IPv4 CIDR block: 172.20.0.0/16
+Leave other options (IPv6, Tenancy) as default.
+Click Create VPC.
+Step 2: Create Public and Private Subnets
+Create the Public Subnet:
+Go to the Subnets section.
+Click Create subnet.
+Select the VPC created in Step 1.
+Fill in the details:
+Name tag: "PublicSubnet"
+Availability Zone: Choose one (e.g., us-east-1a).
+CIDR block: 172.20.1.0/24
+Click Create subnet.
+Create the Private Subnet:
+Click Create subnet again.
+Select the same VPC.
+Fill in the details:
+Name tag: "PrivateSubnet"
+Availability Zone: Choose the same or different (e.g., us-east-1b).
+CIDR block: 172.20.2.0/24
+Click Create subnet.
+Step 3: Create an Internet Gateway
+Go to the Internet Gateways section in the VPC Dashboard.
+Click Create internet gateway.
+Name tag: "MyInternetGateway".
+Click Create and then Attach to VPC.
+Select the VPC ("MyVPC") and click Attach.
+Step 4: Update Route Tables for Public and Private Subnets
+Configure the Public Subnet Route Table:
+Go to the Route Tables section.
+Select the route table associated with the PublicSubnet.
+Click on the Routes tab, then Edit routes.
+Add a new route:
+Destination: 0.0.0.0/0
+Target: Select the Internet Gateway created in Step 3.
+Click Save routes.
+Step 5: Launch EC2 Instance in the Public Subnet
+Go to the EC2 Dashboard and click Launch Instance.
+Select an Amazon Machine Image (AMI) (e.g., Amazon Linux 2).
+Choose an Instance Type (e.g., t2.micro).
+In the Network section, select the VPC ("MyVPC") and Subnet ("PublicSubnet").
+In the Configure Security Group section:
+Create a new security group or select an existing one.
+Add an inbound rule to allow SSH (port 22) from your IP address.
+Key Pair: Create a new key pair (.pem) and download/save it; you will need it for SSH.
+Click Launch Instance.
+Step 6: Launch EC2 Instance in the Private Subnet
+Follow the same steps as above to create another EC2 instance in the PrivateSubnet.
+Choose the same AMI (e.g., Amazon Linux 2).
+In the Network section, select the VPC ("MyVPC") and Subnet ("PrivateSubnet").
+Click Launch Instance.
+Step 7: Connect to the Public EC2 Instance via SSH (using PuTTY)
+Open PuTTY (Windows).
+Enter the Public IP of the public EC2 instance.
+Under Connection → SSH → Auth, browse to the private key file (in .pem format) for the public EC2 instance and select it.
+Click Open to connect to the EC2 instance. You should be logged into the EC2 instance in the PublicSubnet.
+Step 8: Transfer the Key to the Public Instance
+Use WinSCP to copy the private key file (.pem) to the public EC2 instance.
+Drag and drop the .pem file to the public instance.
+Step 9: Connect to the Private EC2 Instance
+On the public EC2 instance, change the permissions of the key file:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+chmod 400 PUBLIC_KEY.pem
+SSH into the private EC2 instance using the command:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+ssh -i "PUBLIC_KEY.pem" ec2-user@172.20.2.223
