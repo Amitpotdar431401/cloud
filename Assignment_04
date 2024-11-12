@@ -1,0 +1,259 @@
+
+                                                      HPCSA 0824
+
+                                                  Cloud & Security
+
+                                                  Lab Assignment 4
+
+
+Create a repository by name lab4 on the Github. Create a file by name results.txt in it. Type some thing into it. Then clone this repository on the local machine. Modify the results.txt file locally. Then push the modifications to the remote repository. 
+
+
+Next modify the results.txt file on Github. Modify the results.txt file localy also. Make sure the contents are different. Then try git push. Perform git pull. Resolv if there is a conflict. Keep remot and local changes. Then push the local contents.
+
+
+Create a local repository in a directory named hpcsa. Create a file and commit. Create a new repository on Github by name demo1. Link the local repository to the remote repository. Perform git pull. Create a new file by name index.html on local repository and then push it to the remote demo1 repostiroty.
+
+
+Create a container using ubuntu image. Install python in it. Save the container as a image. Delete earlier container. Create a new container and run python in it. 
+
+
+Create a container using httpd image. Map outside port 9000. open localhost:9000 on your docker machine. It should display It Works message.
+
+
+
+
+
+
+lab4_steps.txt
+Assignment 04 Steps
+Task 1: GitHub Repository and File Modification
+Create a GitHub Repository
+
+Go to GitHub and log in to your account.
+Click on the "+" icon in the top right corner and select "New repository."
+Name the repository lab4.
+Click on "Create repository."
+Create and Modify results.txt File
+
+Navigate to your new repository on GitHub.
+Click on "Add file" and select "Create new file."
+Name the file results.txt.
+Type some content into the file (e.g., "Initial results").
+Commit the changes by clicking on "Commit new file."
+Clone the Repository Locally
+
+Open your terminal or command prompt.
+Run the following command to clone the repository:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git clone https://github.com/yourusername/lab4.git
+Replace yourusername with your actual GitHub username.
+Modify results.txt Locally
+
+Navigate to the cloned repository directory:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+cd lab4
+Open results.txt in a text editor and modify its content (e.g., change it to "Modified results locally").
+Save the file.
+Push Modifications to Remote Repository
+
+Stage the changes:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git add results.txt
+Commit the changes:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git commit -m "Modified results.txt locally"
+Push the changes:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git push origin main
+Modify results.txt on GitHub
+
+Go back to your GitHub repository.
+Open results.txt and modify its content (e.g., change it to "Modified results on GitHub").
+Commit the changes.
+Modify results.txt Locally Again
+
+Open results.txt locally and change its content (e.g., change it to "Another local modification").
+Save the file.
+Attempt to Push Local Changes
+
+Run:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git push origin main
+You will encounter an error due to conflicts.
+Perform Git Pull to Resolve Conflicts
+
+Run:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git pull origin main
+Git will indicate there are conflicts in results.txt.
+Resolve the Conflict
+
+Open results.txt in a text editor.
+You will see conflict markers (e.g., <<<<<<< HEAD).
+Edit the file to keep both changes or choose one.
+Save the file.
+Stage and Commit Resolved Changes
+
+Stage the resolved file:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git add results.txt
+Commit the changes:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git commit -m "Resolved conflicts in results.txt"
+Push the Local Changes
+
+Finally, push the resolved changes:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git push origin main
+Task 2: Local Repository Creation and Push
+Create a Local Repository
+
+Create a directory named hpcsa:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+mkdir hpcsa
+cd hpcsa
+Initialize a Git repository:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git init
+Create and Commit a File
+
+Create a new file (e.g., file.txt):
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+echo "This is my first file." > file.txt
+Stage and commit the file:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git add file.txt
+git commit -m "Initial commit"
+Create a New Repository on GitHub
+
+Go to GitHub and create a new repository named demo1.
+Link Local Repository to Remote Repository
+
+Run the following command in the terminal:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git remote add origin https://github.com/yourusername/demo1.git
+Perform Git Pull
+
+Pull from the remote repository:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git pull origin main
+Create a New File index.html
+
+Create the file:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+echo "<html><body><h1>Hello, World!</h1></body></html>" > index.html
+Push the New File to Remote Repository
+
+Stage and commit the new file:
+bash
+
+Verify
+
+Open In Editor
+Edit
+Copy code
+git add index.html
+git commit -m "Add
