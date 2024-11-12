@@ -1,0 +1,187 @@
+# AWS Lambda Functions, IAM Users, S3 Bucket, and Git Repository Setup Guide
+
+## Task 1: Create an AWS Lambda Function that Responds with Specific Messages Based on Input Codes
+
+### Steps:
+
+1. **Create the Lambda Function:**
+    - Go to the **AWS Management Console**.
+    - Navigate to the **Lambda service**.
+    - Click on **Create function**.
+    - Choose **Author from scratch**.
+    - Give your function a name (e.g., `CodeMessageFunction`).
+    - Choose a runtime (e.g., **Python 3.x**).
+    - Click **Create function**.
+
+2. **Write the Function Code:**
+    - In the function code editor, write the following Python code:
+
+    ```python
+    def lambda_handler(event, context):
+        # Retrieve the 'code' parameter from the event
+        code = event.get('code')
+        
+        # Check the value of 'code' and return appropriate response
+        if code == '001':
+            return {
+                'statusCode': 200,
+                'body': 'This is server'
+            }
+        elif code == '002':
+            return {
+                'statusCode': 200,
+                'body': 'This is node1'
+            }
+        elif code == '003':
+            return {
+                'statusCode': 200,
+                'body': 'This is a router'
+            }
+        else:
+            return {
+                'statusCode': 400,
+                'body': 'Invalid code'
+            }
+    ```
+
+3. **Create a Test Event:**
+    - Click on **Test** in the Lambda console.
+    - Configure a new test event with the following JSON:
+
+    ```json
+    {
+        "code": "002"
+    }
+    ```
+
+4. **Run the Test:**
+    - Save the test event and click **Test** again.
+    - The output should be:
+
+    ```json
+    {
+        "statusCode": 200,
+        "body": "This is node1"
+    }
+    ```
+
+---
+
+## Task 2: Create a Lambda Function with URL for Course Display
+
+### Steps:
+
+1. **Create the Lambda Function:**
+    - Similar to Task 1, create a new Lambda function (e.g., `CourseMessageFunction`).
+
+2. **Write the Function Code:**
+    - In the function code editor, write the following Python code:
+
+    ```python
+    def lambda_handler(event, context):
+        # Retrieve the 'course' query string parameter from the event
+        course = event.get('queryStringParameters', {}).get('course')
+        
+        # Respond based on the course
+        if course == 'hpcsa':
+            return {
+                'statusCode': 200,
+                'body': 'Welcome to HPCSA course'
+            }
+        elif course == 'ditiss':
+            return {
+                'statusCode': 200,
+                'body': 'Welcome to DITISS course'
+            }
+        elif course == 'dbda':
+            return {
+                'statusCode': 200,
+                'body': 'Welcome to DBDA course'
+            }
+        else:
+            return {
+                'statusCode': 400,
+                'body': 'Invalid course'
+            }
+    ```
+
+3. **Configure the Function URL:**
+    - In the Lambda console, **enable the function URL** (under the "Configuration" tab).
+    - Set the access permissions as needed.
+
+4. **Test the Function:**
+    - Access the function URL with a query string, e.g., `https://your-lambda-url?course=hpcsa`.
+    - You should see the message: `"Welcome to HPCSA course"`.
+
+---
+
+## Task 3: Create IAM Users and S3 Bucket
+
+### Steps:
+
+1. **Create IAM Users:**
+    - Go to the **IAM service** in the AWS Management Console.
+    - Click on **Users** and then **Add user**.
+    - Create a user named `Mike` with **programmatic access** and attach the **AmazonS3FullAccess** policy.
+    - Create another user named `SAM` with **programmatic access** and attach the **AmazonS3ReadOnlyAccess** policy.
+
+2. **Create an S3 Bucket:**
+    - Go to the **S3 service** in the AWS Management Console.
+    - Click on **Create bucket**.
+    - Name your bucket (e.g., `my-test-bucket`) and configure the settings as needed.
+    - Click **Create**.
+
+3. **Test User Access:**
+    - Log in to the AWS Management Console using the credentials for `Mike`.
+    - Navigate to the **S3 bucket** and attempt to **upload a file**. Mike should be able to upload files.
+    - Log in as `SAM` and try to **upload a file**. SAM should receive an **"access denied"** error because he only has **read-only access**.
+
+---
+
+## Task 4: Create a Local Git Repository
+
+### Steps:
+
+1. **Initialize a Git Repository:**
+    - Open your terminal/command prompt.
+    - Navigate to the desired directory and run:
+
+    ```bash
+    git init
+    ```
+
+2. **Create and Edit the HTML File:**
+    - Create a file named `index.html`:
+
+    ```html
+    <html>
+        <body>
+            <h1>Welcome to the Website!</h1>
+            <p>This is a simple HTML file managed by Git.</p>
+        </body>
+    </html>
+    ```
+
+3. **Add and Commit Changes:**
+    - Add the `index.html` file to the Git repository:
+
+    ```bash
+    git add index.html
+    ```
+
+    - Commit the changes:
+
+    ```bash
+    git commit -m "Initial commit with index.html"
+    ```
+
+4. **Check the Status of the Repository:**
+
+    ```bash
+    git status
+    ```
+
+    This will show that the repository is clean (no uncommitted changes).
+
+---
+
