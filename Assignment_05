@@ -1,0 +1,240 @@
+Step 1: Open a Text Editor
+Windows: Use Notepad.
+MacOS: Use TextEdit (make sure it's in plain text mode).
+Linux: Use Gedit, Nano, or any text editor of your choice.
+Step 2: Copy the Full Content Below
+Below is the content you need to copy for your .txt file:
+
+bash
+Copy code
+# Assignment: Docker Containers with HTTPD, Python, and MySQL
+
+## Part 1: Create a Web Server Container Using HTTPD
+
+### Step 1: Install Docker
+Ensure that Docker is installed on your system. You can download it from the official Docker website and follow the installation instructions for your operating system.
+
+### Step 2: Create a Directory for Your Web Server
+Create a directory where you will place your Dockerfile and `index.html`.
+
+```bash
+mkdir my-httpd-server
+cd my-httpd-server
+Step 3: Create the index.html File
+Create a simple index.html file that displays your name:
+
+bash
+Copy code
+nano index.html
+Add the following content:
+
+html
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Server</title>
+</head>
+<body>
+    <h1>Welcome to My Web Server!</h1>
+    <p>My name is [Your Name].</p>
+</body>
+</html>
+Step 4: Create the Dockerfile
+Create a Dockerfile in the same directory that uses the httpd image and copies the index.html file into the container:
+
+bash
+Copy code
+nano Dockerfile
+Add the following content:
+
+dockerfile
+Copy code
+# Use the official HTTPD image from Docker Hub
+FROM httpd:2.4
+
+# Copy the local index.html file to the container's web directory
+COPY index.html /usr/local/apache2/htdocs/
+Step 5: Build the Docker Image
+Build the Docker image using the following command:
+
+bash
+Copy code
+docker build -t my-httpd-server .
+Step 6: Run the Docker Container
+After the image is built, run the container using the following command:
+
+bash
+Copy code
+docker run -d -p 6500:80 my-httpd-server
+This maps port 6500 on your local machine to port 80 inside the container.
+
+Step 7: Access the Web Server
+Open a web browser and visit http://localhost:6500 to verify that the page displays your name.
+
+Part 2: Mapping Local index.html File with Container
+Step 1: Create a Directory for the Local File
+Create a directory to hold your index.html file on your local machine:
+
+bash
+Copy code
+mkdir my-web-content
+cd my-web-content
+Step 2: Create the index.html File
+Create an index.html file inside the directory with your message:
+
+bash
+Copy code
+nano index.html
+Add the following content:
+
+html
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Original Web Server</title>
+</head>
+<body>
+    <h1>Original Message</h1>
+    <p>This is the original message.</p>
+</body>
+</html>
+Step 3: Run the Docker Container with Volume Mapping
+Run the Docker container and map the local directory to the container's web directory using the following command:
+
+bash
+Copy code
+docker run -d -p 8500:80 -v $(pwd)/index.html:/usr/local/apache2/htdocs/index.html httpd:2.4
+This maps port 8500 on your local machine to port 80 inside the container, and maps the index.html file to the container's web directory.
+
+Step 4: Modify the index.html File
+Now, modify the index.html file inside the my-web-content directory. For example, change the message in the <h1> tag:
+
+html
+Copy code
+<h1>Updated Message</h1>
+Step 5: Verify the Changes
+After modifying the index.html file, refresh the browser at http://localhost:8500 to see the updated content.
+
+Part 3: Create Multiple Containers with Same Directory
+Step 1: Create Multiple Containers
+Run 10 containers, each mapped to the same directory, and assign ports from 8510 to 8520:
+
+bash
+Copy code
+for i in {8510..8520}; do
+  docker run -d -p $i:80 -v $(pwd)/index.html:/usr/local/apache2/htdocs/index.html httpd:2.4
+done
+This will run 10 containers and map the ports 8510 through 8520 to the container.
+
+Step 2: Verify All Containers Show the Same Content
+Open a browser and access the URLs:
+
+http://localhost:8510
+http://localhost:8511
+...
+http://localhost:8520
+You should see the same content on all of them, confirming that all containers are using the same index.html.
+
+Part 4: Create MySQL and Python Containers
+Step 1: Create a Network for Containers
+Create a custom network named hpcsa in Docker:
+
+bash
+Copy code
+docker network create hpcsa
+Step 2: Run the MySQL Container
+Run a MySQL container and attach it to the hpcsa network. Set the root password to pass@123:
+
+bash
+Copy code
+docker run --name dbserver --network hpcsa -e MYSQL_ROOT_PASSWORD=pass@123 -d mysql:5.7
+Step 3: Run the Python Container
+Create a Python script (test.py) that connects to MySQL, creates a database, and creates a table. Here’s a sample script:
+
+python
+Copy code
+import mysql.connector
+
+# Connect to MySQL
+db = mysql.connector.connect(
+    host="dbserver",  # MySQL container name
+    user="root",  # MySQL root user
+    password="pass@123",  # Root password
+)
+
+cursor = db.cursor()
+
+# Create a database named 'students'
+cursor.execute("CREATE DATABASE IF NOT EXISTS students")
+
+# Use the 'students' database
+cursor.execute("USE students")
+
+# Create a table named 'batch24'
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS batch24 (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255)
+    )
+""")
+
+# Insert a sample entry
+cursor.execute("INSERT INTO batch24 (name) VALUES ('John Doe')")
+
+# Commit the changes
+db.commit()
+
+# Query the table to verify
+cursor.execute("SELECT * FROM batch24")
+result = cursor.fetchall()
+
+# Print the result
+for row in result:
+    print(row)
+
+# Close the connection
+db.close()
+Step 4: Create a Dockerfile for the Python Container
+Create a Dockerfile for the Python container:
+
+dockerfile
+Copy code
+# Use the official Python image
+FROM python:3.9
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Python script
+COPY test.py .
+
+# Install the MySQL connector library
+RUN pip install mysql-connector-python
+
+# Command to run the Python script
+CMD ["python", "test.py"]
+Step 5: Build and Run the Python Docker Container
+Build the Python Docker image:
+
+bash
+Copy code
+docker build -t python-mysql .
+Run the container and attach it to the hpcsa network:
+
+bash
+Copy code
+docker run --network hpcsa --rm python-mysql
+Step 6: Display the Output
+The Python script will connect to the MySQL container, create the students database, and create the batch24 table. It will then insert a record and print the contents of the table.
+
+You should see the following output:
+
+arduino
+Copy code
+(1, 'John Doe')
