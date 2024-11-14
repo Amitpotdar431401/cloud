@@ -1,0 +1,132 @@
+Step 1: Create a Directory and an index.html File
+Create a new directory:
+Explanation: Create a directory to hold your project files.
+Command:
+
+bash
+Copy code
+mkdir my-kubernetes-app
+cd my-kubernetes-app
+Create an index.html file:
+Explanation: This creates a simple index.html file with a message that will be served by Apache.
+Command:
+
+bash
+Copy code
+echo "This application is running on Kubernetes!!!" > index.html
+Step 2: Create a Docker Image Using Apache HTTPD
+Create a Dockerfile:
+Explanation: This will create a Dockerfile that uses the Apache HTTPD image as the base.
+Command:
+
+bash
+Copy code
+echo "FROM httpd:latest" > Dockerfile
+Copy index.html into the Docker image:
+Explanation: This line in the Dockerfile copies the index.html into the default Apache directory.
+Command:
+
+dockerfile
+Copy code
+COPY index.html /usr/local/apache2/htdocs/
+Build the Docker image:
+Explanation: This command builds the Docker image with the tag my-httpd-app.
+Command:
+
+bash
+Copy code
+docker build -t my-httpd-app .
+Run the Docker container:
+Explanation: This runs the container in the background and maps port 80 in the container to port 8200 on the host.
+Command:
+
+bash
+Copy code
+docker run -d -p 8200:80 my-httpd-app
+Step 3: Push the Docker Image to Docker Hub
+Login to Docker Hub:
+Explanation: Log in to Docker Hub to push the image to your repository.
+Command:
+
+bash
+Copy code
+docker login
+Tag the Docker image:
+Explanation: Tag your image for Docker Hub, replacing your-dockerhub-username with your actual username.
+Command:
+
+bash
+Copy code
+docker tag my-httpd-app your-dockerhub-username/my-httpd-app
+Push the image to Docker Hub:
+Explanation: This command uploads the tagged image to your Docker Hub repository.
+Command:
+
+bash
+Copy code
+docker push your-dockerhub-username/my-httpd-app
+Step 4: Create a Kubernetes Deployment
+Create a Deployment:
+Explanation: This command creates a Kubernetes deployment using the httpd:latest image.
+Command:
+
+bash
+Copy code
+kubectl create deployment httpd-deployment --image=httpd:latest
+Check which node the pod is running on:
+Explanation: This command lists all pods along with additional information, including which node they are running on.
+Command:
+
+bash
+Copy code
+kubectl get pods -o wide
+Create a NodePort service:
+Explanation: This exposes your deployment using a NodePort service to allow external access to the application.
+Command:
+
+bash
+Copy code
+kubectl expose deployment httpd-deployment --type=NodePort --port=80
+Check the assigned port for the service:
+Explanation: This command lists all services and shows the NodePort assigned to your service.
+Command:
+
+bash
+Copy code
+kubectl get services
+Access the website:
+Explanation: Use curl to access the application via the assigned node IP and port. Replace <node-ip> and <node-port> with your actual values.
+Command:
+
+bash
+Copy code
+curl http://<node-ip>:<node-port>
+Step 5: Scale the Deployment
+Scale the deployment to 10 pods:
+Explanation: This command scales your deployment to have 10 replicas (pods).
+Command:
+
+bash
+Copy code
+kubectl scale deployment httpd-deployment --replicas=10
+Check the nodes the pods are running on:
+Explanation: This command will display which nodes your pods are assigned to.
+Command:
+
+bash
+Copy code
+kubectl get pods -o wide
+Check the IP addresses assigned to the pods:
+Explanation: This will show the IP addresses assigned to each pod.
+Command:
+
+bash
+Copy code
+kubectl get pods -o wide
+Access the website on all node IPs:
+Explanation: You can access the application via each node IP and the NodePort.
+Command:
+
+bash
+Copy code
+curl http://<node-ip>:<node-port>
