@@ -10,13 +10,13 @@ cd project
 echo "This application is running on Kubernetes" > index.html
 ---------------------------------------------------------------------------------------------
 Docker file
-# Use the official HTTPD image as a base image
-FROM httpd:latest
-# Copy the custom index.html file into the container's web root directory
-COPY index.html /usr/local/apache2/htdocs/
-# Expose port 8200
-EXPOSE 8200
 
+FROM httpd:latest
+
+COPY index.html /usr/local/apache2/htdocs/
+
+EXPOSE 8200
+--------------------------------------------------------------------------------
 docker build -t my-httpd-app . Run the Docker Container
 docker run -d -p 8200:80 my-httpd-app
 
