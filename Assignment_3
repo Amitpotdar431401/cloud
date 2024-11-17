@@ -17,6 +17,7 @@
     - In the function code editor, write the following Python code:
 
     ```python
+***********************************************************************
     def lambda_handler(event, context):
         # Retrieve the 'code' parameter from the event
         code = event.get('code')
@@ -43,7 +44,7 @@
                 'body': 'Invalid code'
             }
     ```
-
+********************************************************************************
 3. **Create a Test Event:**
     - Click on **Test** in the Lambda console.
     - Configure a new test event with the following JSON:
@@ -78,6 +79,7 @@
     - In the function code editor, write the following Python code:
 
     ```python
+**************************************************************************************
     def lambda_handler(event, context):
         # Retrieve the 'course' query string parameter from the event
         course = event.get('queryStringParameters', {}).get('course')
@@ -104,7 +106,7 @@
                 'body': 'Invalid course'
             }
     ```
-
+****************************************************************************
 3. **Configure the Function URL:**
     - In the Lambda console, **enable the function URL** (under the "Configuration" tab).
     - Set the access permissions as needed.
