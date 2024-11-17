@@ -54,7 +54,8 @@ kubectl get deployments
 kubectl get pods
 
 Step 2: Expose the Deployment Using a NodePort Service
-NodePort service to make it accessible from outside the cluster. kubectl expose deployment httpd-deployment --type=NodePort -- name=httpd-service --port=80 --target-port=80
+NodePort service to make it accessible from outside the cluster. 
+kubectl expose deployment httpd-deployment --type=NodePort -- name=httpd-service --port=80 --target-port=80
 To check which port has been assigned to the NodePort service
 kubectl get svc httpd-service
 
