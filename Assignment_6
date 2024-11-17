@@ -28,10 +28,10 @@ Copy code
 2. Create a Dockerfile:
 
 ```bash
-echo 'FROM python:3.8-slim
+FROM python:3.8-slim
 WORKDIR /app
 COPY app.py .
-CMD ["python", "app.py"]' > Dockerfile
+CMD ["python", "app.py"]
 Step 3: Build the Docker Image
 Build the Docker image:
 
