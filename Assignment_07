@@ -8,6 +8,7 @@ webpage is displayd
 mkdr project
 cd project
 echo "This application is running on Kubernetes" > index.html
+---------------------------------------------------------------------------------------------
 Docker file
 # Use the official HTTPD image as a base image
 FROM httpd:latest
