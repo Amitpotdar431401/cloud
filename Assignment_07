@@ -1,0 +1,94 @@
+                                            Assignment-07
+
+cereate a directory create an index.html file the index.html the index.html
+file will display message "this application is running on kubernetes" cretae a image using httpd image copy index.html inside the container run
+the container and map port 8200 using your image and display the
+webpage is displayd
+
+mkdr project
+cd project
+echo "This application is running on Kubernetes" > index.html
+Docker file
+# Use the official HTTPD image as a base image
+FROM httpd:latest
+# Copy the custom index.html file into the container's web root directory
+COPY index.html /usr/local/apache2/htdocs/
+# Expose port 8200
+EXPOSE 8200
+
+docker build -t my-httpd-app . Run the Docker Container
+docker run -d -p 8200:80 my-httpd-app
+
+[dhpcsa@master project]$ curl http://localhost:8200
+This application is running on Kubernetes
+-----------------------------------------------------------------------------------------
+
+
+
+Q2
+create a repository on your docker hub account push this image to
+docker repo
+make a new repo on docker hub
+
+
+1. Log in to Docker Hub
+docker login
+2. Tag the image
+docker tag <local-image-name> <dockerhub-username>/<repository- name>:<tag>
+3. Push the image to Docker Hub
+docker push <dockerhub-username>/<repository-name>:<tag>
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+Q3
+on the Kubernetes cluster create a deployment using httpd image check
+on which node the pod is runing create a service of type nodeport for this
+deployment check the port assigned for this service use url to access
+website on the specified port on the node address
+
+Step 1: Create a Deployment with the httpd Image
+kubectl create deployment httpd-deployment --image=httpd
+Verify the Deployment:
+kubectl get deployments
+kubectl get pods
+
+Step 2: Expose the Deployment Using a NodePort Service
+NodePort service to make it accessible from outside the cluster. kubectl expose deployment httpd-deployment --type=NodePort -- name=httpd-service --port=80 --target-port=80
+To check which port has been assigned to the NodePort service
+kubectl get svc httpd-service
+
+Step 3: Check on Which Node the Pod is Running
+kubectl get pod -o wide
+Get the Node IP:
+kubectl get nodes -o wide
+
+Access the website through the browser using the format http://<node-
+ip>:<NodePort>, e.g., http://192.168.56.127:31557.
+-----------------------------------------------------------------------------------------------
+
+
+
+
+Q4
+scale the deployment to create 10 pods check on which node the pods are
+running check the ip addresses assigned to the pods try accessing website
+on all node ip and specified port then scale the deployment to 2 replic
+
+1. Scale the Deployment to Create 10 Pods
+kubectl scale deployment my-deployment --replicas=10
+
+Check the IP addresses of the pods
+kubectl get pods -o wide
+Access the website using node IP and port
+curl http://<node-ip>:<node-port>
+Scale the deployment to 2 replicas:
+kubectl scale deployment <deployment-name> --replicas=2
+running nodes
+kubectl get nodes
+
+to check the service and port
+kubectl get svc
+to check which pod is running on which node
+kubectl get pods -o wide
+curl http://<node-ip>:<node-port>
+
