@@ -1,259 +1,123 @@
 
-                                                      HPCSA 0824
-
-                                                  Cloud & Security
-
-                                                  Lab Assignment 4
+                              Assignment-o4
 
 
-Create a repository by name lab4 on the Github. Create a file by name results.txt in it. Type some thing into it. Then clone this repository on the local machine. Modify the results.txt file locally. Then push the modifications to the remote repository. 
+1. Create a repository by name lab4 on the Github. Create a file by name
+results.txt in it. Type some thing into it. Then clone this repository on the local
+machine. Modify the results.txt file locally. Then push the modifications to the
+remote repository.
 
+Step 1: Create a Repository on GitHub
 
-Next modify the results.txt file on Github. Modify the results.txt file localy also. Make sure the contents are different. Then try git push. Perform git pull. Resolv if there is a conflict. Keep remot and local changes. Then push the local contents.
+Step 2: Add a File results.txt to the Repository
 
+Step 3: Clone the Repository to Your Local Machine
 
-Create a local repository in a directory named hpcsa. Create a file and commit. Create a new repository on Github by name demo1. Link the local repository to the remote repository. Perform git pull. Create a new file by name index.html on local repository and then push it to the remote demo1 repostiroty.
-
-
-Create a container using ubuntu image. Install python in it. Save the container as a image. Delete earlier container. Create a new container and run python in it. 
-
-
-Create a container using httpd image. Map outside port 9000. open localhost:9000 on your docker machine. It should display It Works message.
-
-
-
-
-
-
-lab4_steps.txt
-Assignment 04 Steps
-Task 1: GitHub Repository and File Modification
-Create a GitHub Repository
-
-Go to GitHub and log in to your account.
-Click on the "+" icon in the top right corner and select "New repository."
-Name the repository lab4.
-Click on "Create repository."
-Create and Modify results.txt File
-
-Navigate to your new repository on GitHub.
-Click on "Add file" and select "Create new file."
-Name the file results.txt.
-Type some content into the file (e.g., "Initial results").
-Commit the changes by clicking on "Commit new file."
-Clone the Repository Locally
-
-Open your terminal or command prompt.
-Run the following command to clone the repository:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-git clone https://github.com/yourusername/lab4.git
-Replace yourusername with your actual GitHub username.
-Modify results.txt Locally
-
-Navigate to the cloned repository directory:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
+git clone https://github.com/ASHUTOSH-SG/lab4.git
 cd lab4
-Open results.txt in a text editor and modify its content (e.g., change it to "Modified results locally").
-Save the file.
-Push Modifications to Remote Repository
+Step 4: Modify the results.txt File Locally
 
-Stage the changes:
-bash
+Step 5: Stage, Commit, and Push Changes to GitHub
 
-Verify
-
-Open In Editor
-Edit
-Copy code
+check the status of the repository
+git status
+Stage the changes
 git add results.txt
-Commit the changes:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-git commit -m "Modified results.txt locally"
-Push the changes:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
+Commit the changes
+git commit -m "Updated content in results.txt"
+Push the changes
 git push origin main
-Modify results.txt on GitHub
+Why Conflicts Happen
+ Simultaneous Edits: Two people editing the same part of the file.
 
-Go back to your GitHub repository.
-Open results.txt and modify its content (e.g., change it to "Modified results on GitHub").
-Commit the changes.
-Modify results.txt Locally Again
+How to Resolve Conflicts
+1. Identify the Conflicted File: Git tells you which files are in conflict.
+2. Manually Edit: Open the file, decide which changes to keep, and remove the
+conflict markers.
+3. Stage the Resolved File: Use git add to mark it as resolved.
+4. Commit: Commit your resolution with a message like "Resolved conflict".
+5. Push: Finally, push the resolved changes to GitHub.
+-----------------------------------------------------------------------------------------------------------
 
-Open results.txt locally and change its content (e.g., change it to "Another local modification").
-Save the file.
-Attempt to Push Local Changes
 
-Run:
-bash
+Q2
+Create a local repository in a directory named hpcsa. Create a file and commit. Create
+a new repository on Github by name demo1. Link the local repository to the remote
+repository. Perform git pull. Create a new file by name index.html on local repository
+and then push it to the remote demo1 repostiroty.
 
-Verify
-
-Open In Editor
-Edit
-Copy code
-git push origin main
-You will encounter an error due to conflicts.
-Perform Git Pull to Resolve Conflicts
-
-Run:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-git pull origin main
-Git will indicate there are conflicts in results.txt.
-Resolve the Conflict
-
-Open results.txt in a text editor.
-You will see conflict markers (e.g., <<<<<<< HEAD).
-Edit the file to keep both changes or choose one.
-Save the file.
-Stage and Commit Resolved Changes
-
-Stage the resolved file:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-git add results.txt
-Commit the changes:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-git commit -m "Resolved conflicts in results.txt"
-Push the Local Changes
-
-Finally, push the resolved changes:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-git push origin main
-Task 2: Local Repository Creation and Push
-Create a Local Repository
-
-Create a directory named hpcsa:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
+Step 1: Create and initialize a local repository
 mkdir hpcsa
 cd hpcsa
-Initialize a Git repository:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
 git init
-Create and Commit a File
 
-Create a new file (e.g., file.txt):
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-echo "This is my first file." > file.txt
-Stage and commit the file:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
+Step 2: Create a file and commit
+echo "Initial file content" > file.txt
 git add file.txt
-git commit -m "Initial commit"
-Create a New Repository on GitHub
+git commit -m "Initial commit with file.txt"
 
-Go to GitHub and create a new repository named demo1.
-Link Local Repository to Remote Repository
+Step 3: Create a GitHub repository
+# (Do this on GitHub)
 
-Run the following command in the terminal:
-bash
+Step 4: Link the local repository to the remote
+git remote add origin https://github.com/your-username/demo1.git
 
-Verify
-
-Open In Editor
-Edit
-Copy code
-git remote add origin https://github.com/yourusername/demo1.git
-Perform Git Pull
-
-Pull from the remote repository:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
+Step 5: Pull remote changes
 git pull origin main
-Create a New File index.html
 
-Create the file:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-echo "<html><body><h1>Hello, World!</h1></body></html>" > index.html
-Push the New File to Remote Repository
-
-Stage and commit the new file:
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
+Step 6: Create a new file (index.html)
+echo "<!DOCTYPE html><html><head><title>Demo</title></head><body><h1>Welcome
+to Demo1</h1></body></html>" > index.html
 git add index.html
-git commit -m "Add
+git commit -m "Add index.html"
+
+Step 7: Push the file to GitHub
+git push origin main
+----------------------------------------------------------------------------
+
+
+Q3
+Create a container using ubuntu image. Install python in it. Save the container as a
+image. Delete earlier container. Create a new container and run python in it.
+
+# Step 1: Pull Ubuntu image
+docker pull ubuntu
+
+# Step 2: Create and start the container
+docker run -it ubuntu
+
+Install Python in the container
+
+apt update
+apt install python3 -y
+python3 --version # Verify Python installation
+
+Exit the container
+exit
+
+Step 3: Save the container as a new image
+docker ps -a # Find container ID
+docker commit container_id ubuntu_with_python
+
+Step 4: Remove the old container
+docker rm container_id
+
+Step 5: Create a new container from the saved image
+docker run -it ubuntu_with_python
+
+Verify Python in the new container
+python3 –version
+--------------------------------------------------------------------------------------
+
+
+
+Q4
+Create a container using httpd image. Map outside port 9000. open localhost:9000 on
+your docker machine. It should display It Works message.
+Pull the httpd image
+docker pull httpd
+
+Run the httpd containe
+docker run -d -p 9000:80 --name my_httpd httpd
+
+http://localhost:9000
