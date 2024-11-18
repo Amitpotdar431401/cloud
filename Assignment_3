@@ -18,32 +18,35 @@
 
     ```python
 ***********************************************************************
-    def lambda_handler(event, context):
-        # Retrieve the 'code' parameter from the event
-        code = event.get('code')
-        
-        # Check the value of 'code' and return appropriate response
-        if code == '001':
-            return {
-                'statusCode': 200,
-                'body': 'This is server'
-            }
-        elif code == '002':
-            return {
-                'statusCode': 200,
-                'body': 'This is node1'
-            }
-        elif code == '003':
-            return {
-                'statusCode': 200,
-                'body': 'This is a router'
-            }
-        else:
-            return {
-                'statusCode': 400,
-                'body': 'Invalid code'
-            }
-    ```
+def lambda_handler(event, context):
+    # Log the incoming event for debugging purposes
+    print(f"Event received: {event}")
+    
+    # Retrieve the 'code' query string parameter from the event
+    code = event.get('queryStringParameters', {}).get('code')
+    
+    # Check the value of 'code' and return appropriate response
+    if code == '001':
+        return {
+            'statusCode': 200,
+            'body': 'This is server'
+        }
+    elif code == '002':
+        return {
+            'statusCode': 200,
+            'body': 'This is node1'
+        }
+    elif code == '003':
+        return {
+            'statusCode': 200,
+            'body': 'This is a router'
+        }
+    else:
+        return {
+            'statusCode': 400,
+            'body': 'Invalid code'
+        }
+
 ********************************************************************************
 3. **Create a Test Event:**
     - Click on **Test** in the Lambda console.
