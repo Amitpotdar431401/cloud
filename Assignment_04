@@ -1,7 +1,24 @@
 
                               Assignment-o4
 
+Grant Proper Ownership to hduser: Assign ownership of the /dhpcsa directory to hduser so that you can work without sudo.
 
+bash
+------------------------------------------
+error
+sudo chown -R hduser:hduser /dhpcsa
+
+bash
+Copy code
+mkdir ~/dhpcsa
+cd ~/dhpcsa
+git clone http://github.com/Amitpotdar431401/lab4
+
+
+sudo chown -R hduser:hduser /dhpcsa
+
+
+-------------------------------------------------------------------------
 1. Create a repository by name lab4 on the Github. Create a file by name
 results.txt in it. Type some thing into it. Then clone this repository on the local
 machine. Modify the results.txt file locally. Then push the modifications to the
