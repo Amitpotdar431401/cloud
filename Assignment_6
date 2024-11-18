@@ -1,224 +1,192 @@
-Q1: Python Program for Addition and Multiplication
-Step 1: Create a Python Program
-Create a file named app.py:
 
-bash
+Create a python program that takes 2 numbers from the user and displays addition and multiplication result. Now create an image of this program. Run the container from this image and display the results.
 
-Verify
+# Step 1: Create the calc.py file
 
-Open In Editor
-Edit
-Copy code
-echo 'def main():
- num1 = float(input("Enter first number: "))
- num2 = float(input("Enter second number: "))
- print(f"Addition: {num1 + num2}")
- print(f"Multiplication: {num1 * num2}")
-if name == "main": main()' > app.py
+# calc.py
+
+def main():
+    print("Enter two numbers:")
+    try:
+        num1 = float(input("Number 1: "))
+        num2 = float(input("Number 2: "))
+        addition = num1 + num2
+        multiplication = num1 * num2
+        print(f"Addition: {addition}")
+        print(f"Multiplication: {multiplication}")
+    except ValueError:
+        print("Please enter valid numbers.")
+
+if __name__ == "__main__":
+    main()
 
 
-Verify
+# Step 2: Create the Dockerfile
+cat > Dockerfile << 'EOF'
+# Dockerfile
 
-Open In Editor
-Edit
-Copy code
+# Use Python base image
+FROM python:3.9-slim
 
-### Step 2: Create a Dockerfile
-
-2. Create a Dockerfile:
-
-```bash
-FROM python:3.8-slim
+# Set the working directory inside the container
 WORKDIR /app
-COPY app.py .
-CMD ["python", "app.py"]
-Step 3: Build the Docker Image
-Build the Docker image:
 
-bash
+# Copy the Python script to the container
+COPY calc.py /app/calc.py
 
-Verify
+# Set the command to run the script
+CMD ["python", "calc.py"]
+EOF
 
-Open In Editor
-Edit
-Copy code
-docker build -t python-calculator .
-Step 4: Run the Docker Container
-Run the Docker container:
+# Step 3: Build the Docker Image
+docker build -t calc-app .
 
-bash
+# Step 4: Run the Docker Container
+docker run -it calc-app
 
-Verify
+----------------------------------------------------------------------------------------------------
+Q2  Create a directory. Create an index.html file. Create a image using httpd image. Copy index.html inside the container. Run the container and map port 8200 using your image and display the webpage is displayed.
 
-Open In Editor
-Edit
-Copy code
-docker run -it python-calculator
------------------------------------------------------------------------------------------------
-Q2: Create a Simple Web Server with HTML
-Step 1: Create a Directory and HTML File
-Create a directory and HTML file:
+# Step 1: Create directory and index.html
+mkdir website
+cd website
+cat > index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Webpage</title>
+</head>
+<body>
+    <h1>Welcome to My Webpage!</h1>
+    <p>This is a simple webpage hosted in a Docker container using the httpd image.</p>
+</body>
+</html>
+EOF
 
-bash
+# Step 2: Create Dockerfile
+cat > Dockerfile << 'EOF'
+# Use the official httpd image
+FROM httpd:latest
 
-Verify
+# Copy the index.html to the container's document root
+COPY index.html /usr/local/apache2/htdocs/
+EOF
 
-Open In Editor
-Edit
-Copy code
-mkdir webapp
-cd webapp
-echo "<h1>Welcome to My Webpage</h1>" > index.html
-Step 2: Create a Dockerfile for HTTPD
-Create a Dockerfile in the webapp directory:
+# Step 3: Build the Docker image
+docker build -t my-httpd-image .
 
-bash
+# Step 4: Run the container
+docker run -d -p 8200:80 --name my-httpd-container my-httpd-image
 
-Verify
+# Step 5: Test the Webpage
+# Open a web browser and go to http://localhost:8200
 
-Open In Editor
-Edit
-Copy code
-echo 'FROM httpd:2.4
-COPY index.html /usr/local/apache2/htdocs/' > Dockerfile
-Step 3: Build the Docker Image
-Build the Docker image:
+--------------------------------------------------------------------------------------
 
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-docker build -t my-httpd-app .
-Step 4: Run the Docker Container
-Run the Docker container and map port 8200:
-
-bash
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-docker run -d -p 8200:80 my-httpd-app
-------------------------------------------------------------------------------------------------------------
-Q3: Create a Python Application with MySQL
-Step 1: Create a Python Script
-Create a Python script named test.py:
-
-bash
-
-Verify
-
-Open In Editor
-Edit
-python Copy code
-********************************************
-import mysql.connector
-
-def create_database():
-    # Connect to the MySQL server
-    conn = mysql.connector.connect(
-        host="mysql_container",
-        user="root",
-        password="yourpassword"
-    )
-    
-    # Create a cursor object to execute SQL queries
-    cursor = conn.cursor()
-    
-    # Execute the SQL query to create the database if it doesn't already exist
-    cursor.execute("CREATE DATABASE IF NOT EXISTS testdb")
-    
-    # Print a success message
-    print("Database created successfully")
-    
-    # Close the cursor and connection
-    cursor.close()
-    conn.close()
-
-# Call the function to create the database
-create_database()
-
-*******************************************************
+Q3  Create a image of the test.py file. Create a network by name app2. Create a MYSQL container and connect it to this network. Now create a container of test.py application and connect it to the same network and display that the database is created.
 
 
-Verify
+# calc.py
 
-Open In Editor
-Edit
-Copy code
+def main():
+    print("Enter two numbers:")
+    try:
+        num1 = float(input("Number 1: "))
+        num2 = float(input("Number 2: "))
+        addition = num1 + num2
+        multiplication = num1 * num2
+        print(f"Addition: {addition}")
+        print(f"Multiplication: {multiplication}")
+    except ValueError:
+        print("Please enter valid numbers.")
 
-### Step 2: Create a Dockerfile for the Python Application
+if __name__ == "__main__":
+    main()
+EOF
 
-10. Create a Dockerfile for the Python application:
+# Step 2: Create the Dockerfile
+********************************'
+# Dockerfile
 
- ```bash
- FROM python:3.8-slim
- WORKDIR /app
- COPY test.py .
- RUN pip install mysql-connector-python
- CMD ["python", "test.py"]
- ```
+# Use Python base image
+FROM python:3.9-slim
 
-### Step 3: Create a Docker Network
+# Set the working directory inside the container
+WORKDIR /app
 
-11. Create a Docker network:
+# Copy the Python script to the container
+COPY calc.py /app/calc.py
 
- ```bash
- docker network create app2
- ```
+# Set the command to run the script
+CMD ["python", "calc.py"]
+EOF
+****************************
+# Step 3: Build the Docker Image
+docker build -t calc-app .
 
-### Step 4: Run MySQL Container
+# Step 4: Run the Docker Container
+docker run -it calc-app
 
-12. Run the MySQL container connected to the network:
+---------------------------------------------------------------------------------------
 
- ```bash
- docker run --name mysql_container --network app2 -e MYSQL_ROOT_PASSWORD=yourpassword -d mysql:5.7
- ```
+Q4 Create a docker compose file to start 4 containers using httpd image. Map ports 5000, 6000, 7000 and 8000. Port 8000 website should display “Welcome to ACTS”. Port 5000 should display “Welcome to HPCSA”. Port 6000 should display “Welcome to DITISS” and port 7000 should display “Welcome to DAI”. Use docker-compose command.
 
-### Step 5: Build and Run the Python Application Container
+#!/bin/bash
 
-13. Build the image for the Python application:
+# Step 1: Create the directory for the project
+mkdir httpd_project && cd httpd_project
 
- ```bash
- docker build -t python-mysql-app .
- ```
+# Step 2: Create the directories for each container's content
+mkdir -p web5000 web6000 web7000 web8000
 
-14. Run the Python application container:
+# Step 3: Create index.html for each container
+echo "<h1>Welcome to HPCSA</h1>" > web5000/index.html
+echo "<h1>Welcome to DITISS</h1>" > web6000/index.html
+echo "<h1>Welcome to DAI</h1>" > web7000/index.html
+echo "<h1>Welcome to ACTS</h1>" > web8000/index.html
 
- ```bash
- docker run --network app2 python-mysql-app
- ```
+# Step 4: Create the docker-compose.yml file
+cat > docker-compose.yml << 'EOF'
+version: "3.9"
 
----
+services:
+  web5000:
+    image: httpd:latest
+    container_name: web5000
+    ports:
+      - "5000:80"
+    volumes:
+      - ./web5000:/usr/local/apache2/htdocs/
 
-## Q4: Docker Compose for Multiple Containers
+  web6000:
+    image: httpd:latest
+    container_name: web6000
+    ports:
+      - "6000:80"
+    volumes:
+      - ./web6000:/usr/local/apache2/htdocs/
 
-### Step 1: Create a `docker-compose.yml` File
+  web7000:
+    image: httpd:latest
+    container_name: web7000
+    ports:
+      - "7000:80"
+    volumes:
+      - ./web7000:/usr/local/apache2/htdocs/
 
-15. Create a `docker-compose.yml` file:
+  web8000:
+    image: httpd:latest
+    container_name: web8000
+    ports:
+      - "8000:80"
+    volumes:
+      - ./web8000:/usr/local/apache2/htdocs/
+EOF
 
- ```bash
- echo 'version: "3"
- services:
-   web1:
-     image: httpd
-     ports:
-       - "5000:80"
-     volumes:
-       - ./web1:/usr/local/apache2/htdocs/
-   
-   web2:
-     image: httpd
-     ports:
-       - "6000:80"
-     volumes:
-       - ./web2:/usr/local/apache2/htdocs/
-   
-   web3:
-     image: httpd
-     ports:
-       - "700
+# Step 5: Start the containers using Docker Compose
+docker-compose up -d
+
+
+
