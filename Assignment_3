@@ -80,32 +80,35 @@
 
     ```python
 **************************************************************************************
-    def lambda_handler(event, context):
-        # Retrieve the 'course' query string parameter from the event
-        course = event.get('queryStringParameters', {}).get('course')
-        
-        # Respond based on the course
-        if course == 'hpcsa':
-            return {
-                'statusCode': 200,
-                'body': 'Welcome to HPCSA course'
-            }
-        elif course == 'ditiss':
-            return {
-                'statusCode': 200,
-                'body': 'Welcome to DITISS course'
-            }
-        elif course == 'dbda':
-            return {
-                'statusCode': 200,
-                'body': 'Welcome to DBDA course'
-            }
-        else:
-            return {
-                'statusCode': 400,
-                'body': 'Invalid course'
-            }
-    ```
+def lambda_handler(event, context):
+    # Log the incoming event for debugging
+    print(f"Event received: {event}")
+    
+    # Retrieve the 'course' query string parameter from the event
+    course = event.get('queryStringParameters', {}).get('course')
+    
+    # Respond based on the course
+    if course == 'hpcsa':
+        return {
+            'statusCode': 200,
+            'body': 'Welcome to HPCSA course'
+        }
+    elif course == 'ditiss':
+        return {
+            'statusCode': 200,
+            'body': 'Welcome to DITISS course'
+        }
+    elif course == 'dbda':
+        return {
+            'statusCode': 200,
+            'body': 'Welcome to DBDA course'
+        }
+    else:
+        return {
+            'statusCode': 400,
+            'body': 'Invalid course'
+        }
+
 ****************************************************************************
 3. **Configure the Function URL:**
     - In the Lambda console, **enable the function URL** (under the "Configuration" tab).
